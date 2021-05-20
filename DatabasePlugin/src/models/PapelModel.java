@@ -3,11 +3,11 @@ package models;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Papel {
+public class PapelModel {
 
 	private Map<String,String> camposInsert;
 	
-	public Papel() {
+	public PapelModel() {
 		setCamposInsert();
 	}
 	
