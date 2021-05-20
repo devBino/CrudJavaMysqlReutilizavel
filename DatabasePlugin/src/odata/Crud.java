@@ -1,7 +1,9 @@
 package odata;
 
-import java.util.Map;
 import java.lang.StringBuilder;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Crud extends Database {
 
@@ -9,24 +11,54 @@ public class Crud extends Database {
 		super();
 	}
 	
-	public void prepararInsert(String prTabela, Map<String,String> prCampos) {
+	public int salvar() {
+		
+		int qtdeSalvo = 0; 
+		
+		try {
+			
+			qtdeSalvo = prepareInsert.executeUpdate();
+			
+			prepareInsert.clearBatch();
+			prepareInsert.clearParameters();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return qtdeSalvo;
+	}
+
+	public ResultSet listar(String prTabela, String prLimit) {
 		
 		StringBuilder sql = new StringBuilder();
-		
-		sql.append("insert into ");
+		sql.append("select * from ");
 		sql.append(prTabela);
-		sql.append(" ");
-		sql.append("(");
-		sql.append(montarColunas(prCampos));
-		sql.append(")");
-		sql.append(" values ");
-		sql.append("(");
-		sql.append(montarInterrogacoesValores(prCampos));
-		sql.append(");");
+		sql.append(" limit ");
 		
-		sqlInsert = sql.toString();
+		if( prLimit != null ) {
+			sql.append(prLimit);
+		}else {
+			sql.append("100");
+		}
 		
-		prepararStatementInsert(prCampos);
+		Connection con = getConnection();
+		ResultSet dados = null;
+		
+		try {
+			
+			Statement stmt = con.createStatement(
+				ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY
+			);
+			
+			dados = stmt.executeQuery(sql.toString());
+			
+			return dados;
+			
+		}catch(Exception e) {
+			return null;
+		}
 		
 	}
 	

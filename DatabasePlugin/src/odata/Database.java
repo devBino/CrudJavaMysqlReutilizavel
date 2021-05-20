@@ -3,9 +3,7 @@ package odata;
 import java.lang.StringBuilder;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Map;
 
 import configs.Params;
@@ -149,39 +147,27 @@ public class Database {
 		
 	}
 	
-	public ResultSet listar(String prTabela, String prLimit) {
+	public void prepararInsert(String prTabela, Map<String,String> prCampos) {
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("select * from ");
+		
+		sql.append("insert into ");
 		sql.append(prTabela);
-		sql.append(" limit ");
+		sql.append(" ");
+		sql.append("(");
+		sql.append(montarColunas(prCampos));
+		sql.append(")");
+		sql.append(" values ");
+		sql.append("(");
+		sql.append(montarInterrogacoesValores(prCampos));
+		sql.append(");");
 		
-		if( prLimit != null ) {
-			sql.append(prLimit);
-		}else {
-			sql.append("100");
-		}
+		sqlInsert = sql.toString();
 		
-		ResultSet dados = null;
-		
-		try {
-			
-			Statement stmt = con.createStatement(
-				ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY
-			);
-			
-			dados = stmt.executeQuery(sql.toString());
-			
-			return dados;
-			
-		}catch(Exception e) {
-			return null;
-		}
+		prepararStatementInsert(prCampos);
 		
 	}
-	
-	
+
 	public void prepararStatementInsert(Map<String,String> prCampos) {
 		
 		try {
@@ -216,24 +202,5 @@ public class Database {
 		}
 		
 	}
-	
-	public int salvar() {
-		
-		int qtdeSalvo = 0; 
-		
-		try {
-			
-			qtdeSalvo = prepareInsert.executeUpdate();
-			
-			prepareInsert.clearBatch();
-			prepareInsert.clearParameters();
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return qtdeSalvo;
-	}
-	
 	
 }
