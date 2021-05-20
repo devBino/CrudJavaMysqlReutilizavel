@@ -30,4 +30,8 @@ public class Papel {
 		return camposInsert;
 	}
 	
+	public String getColunaId() {
+		return "cdPapel";
+	}
+	
 }

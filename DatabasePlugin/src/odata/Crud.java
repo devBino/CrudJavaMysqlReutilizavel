@@ -28,6 +28,20 @@ public class Crud extends Database {
 		
 		return qtdeSalvo;
 	}
+	
+	public int deletar() {
+		int qtdeDeletado = 0;
+		
+		try {
+			
+			qtdeDeletado = prepareDelete.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return qtdeDeletado;
+	}
 
 	public ResultSet listar(String prTabela, String prLimit) {
 		

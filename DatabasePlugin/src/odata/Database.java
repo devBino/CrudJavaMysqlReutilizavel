@@ -21,6 +21,8 @@ public class Database {
 	
 	protected String sqlInsert;
 	protected PreparedStatement prepareInsert;
+	protected String sqlDelete;
+	protected PreparedStatement prepareDelete;
 	
 	public Database() {
 		setTipoSgbd("mysql");
@@ -201,6 +203,33 @@ public class Database {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void prepararDelete(String prTabela, String prColuna, int prId) {
+		
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("delete from ");
+		sql.append(prTabela);
+		sql.append(" where ");
+		sql.append(prColuna);
+		sql.append(" = ?");
+		
+		sqlDelete = sql.toString();
+		
+		prepararStatementDelete(prId);
+		
+	}
+	
+	public void prepararStatementDelete(int prId) {
+		try {
+			
+			prepareDelete = con.prepareStatement(sqlDelete);
+			prepareDelete.setInt(1, prId);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

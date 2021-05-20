@@ -12,7 +12,7 @@ public class Start {
 	public static Crud crud = new Crud();
 	
 	public static void main(String[] args) {
-		salvarPapel();
+		salvarPapel();		
 		getPapeis();
 	}
 	
@@ -31,6 +31,17 @@ public class Start {
 		
 		crud.prepararInsert("papel",campos);
 		int regSalvos = crud.salvar();
+		
+	}
+	
+	public static void deletarPapel(int prId) {
+		
+		Papel p = new Papel();
+		
+		crud.prepararDelete("papel",p.getColunaId(),prId);
+		int regDeletados = crud.deletar();
+		
+		System.out.println(regDeletados);
 		
 	}
 	
