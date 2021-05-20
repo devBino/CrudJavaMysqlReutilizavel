@@ -13,6 +13,7 @@ public class Start {
 	
 	public static void main(String[] args) {
 		salvarPapel();
+		getPapeis();
 	}
 	
 	public static void salvarPapel() {
@@ -30,8 +31,6 @@ public class Start {
 		
 		crud.prepararInsert("papel",campos);
 		int regSalvos = crud.salvar();
-		
-		System.out.println(regSalvos);
 		
 	}
 	

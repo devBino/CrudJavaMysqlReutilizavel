@@ -118,11 +118,6 @@ public class Database {
 		return servidor;
 	}
 	
-	public Boolean salvar(String prTabela, Map<String,String> prCampos ) {
-	
-		return true;
-	}
-	
 	public String montarColunas(Map<String,String> prCampos) {
 		
 		StringBuilder colunas = new StringBuilder();
