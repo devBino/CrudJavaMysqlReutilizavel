@@ -7,6 +7,21 @@ import java.sql.ResultSet;
 import odata.Crud;
 import models.PapelModel;
 
+
+/**
+ * 
+ * @author Fernando Bino
+ * @description
+ * 	Essa classe de exemplo, vai utilizar uma model PapelModel, e essa classe é PapelExemplo
+ *  apenas pra exemplificar um entidade do banco de dados chamada Papel
+ *  que no caso são papeis de investimentos financeiros.
+ *  
+ *  para manipulação dos campos, essa model por via de regra deve 
+ *  conter um atributo camposInsert acessado por getCampos()
+ *  que retorna um Map<String,String> que será utilizado para manipulação 
+ *  das colunas da tabela bem como dos seus valores
+ *
+ */
 public class PapelExemplo {
 
 	public Crud crud;
