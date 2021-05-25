@@ -2,6 +2,7 @@ package exemplos;
 
 import java.lang.StringBuilder;
 import java.util.Map;
+import java.util.ArrayList;
 import java.sql.ResultSet;
 
 import odata.Crud;
@@ -36,17 +37,21 @@ public class PapelExemplo {
 		
 		Map<String,String> campos = p.getCampos();
 		
-		campos.put("nmPapel", campos.get("nmPapel")+"meu papel teste");
-		campos.put("subTipo", campos.get("subTipo")+"3");
+		campos.put("nmPapel", campos.get("nmPapel")+"OZ1D");
+		campos.put("subTipo", campos.get("subTipo")+"4");
 		campos.put("cdUsuario", campos.get("cdUsuario")+"2");
-		campos.put("cotacao", campos.get("cotacao")+"909022.08");
-		campos.put("cdTipo", campos.get("cdTipo")+"2");
-		campos.put("taxaIr", campos.get("taxaIr")+"15.00");
+		campos.put("cotacao", campos.get("cotacao")+"70345.23");
+		campos.put("cdTipo", campos.get("cdTipo")+"3");
+		campos.put("taxaIr", campos.get("taxaIr")+"0.00");
 		
 		crud.prepararInsert("papel",campos);
 		int regSalvos = crud.salvar();
 		
 		System.out.println(regSalvos + " Registro(s) salvo(s)...");
+		
+	}
+	
+	public void alterarPapel(int prId) {
 		
 	}
 	
@@ -63,32 +68,24 @@ public class PapelExemplo {
 	
 	public void getPapeis() {
 		
-		ResultSet dados = crud.listar("papel","1000");
+		PapelModel pModel = new PapelModel();
+		ArrayList<String[]> listaPapeis = crud.prepararLista( crud.listar("papel","1000"), pModel );
 		StringBuilder resultado = new StringBuilder();
 		
-		resultado.append("ID\t");
-		resultado.append("DESCRIÇÃO\t");
-		resultado.append("VALOR\n");
-		resultado.append("----------------------------------------------------\n");
+		for(String coluna : pModel.getApelidosColunas()){
+			resultado.append(coluna + "\t");
+		}
 		
-		try {
+		resultado.append("\n");
+		
+		for(int i=0; i<listaPapeis.size(); i++) {
 			
-			dados.first();
-			
-			while( !dados.isAfterLast() ) {
-				
-				resultado.append(dados.getInt("cdPapel"));
-				resultado.append("\t");
-				resultado.append(dados.getString("nmPapel"));
-				resultado.append("\t");
-				resultado.append(dados.getDouble("taxaIr"));
-				resultado.append("\n");
-				
-				dados.next();
+			for(int j=0; j<listaPapeis.get(i).length; j++) {
+				resultado.append(listaPapeis.get(i)[j] + "\t");
 			}
 			
-		}catch(Exception e) {
-			System.err.println(e);
+			resultado.append("\n");
+			
 		}
 		
 		System.out.println(resultado.toString());

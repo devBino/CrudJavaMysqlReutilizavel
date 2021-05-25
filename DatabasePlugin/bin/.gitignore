@@ -1,4 +1,5 @@
-/app/
-/odata/
-/models/
 /exemplos/
+/odata/
+/app/
+/models/
+*.class

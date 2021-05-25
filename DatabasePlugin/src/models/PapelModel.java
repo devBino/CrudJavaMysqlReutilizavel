@@ -1,14 +1,13 @@
 package models;
 
-import java.util.Map;
 import java.util.HashMap;
 
-public class PapelModel {
+public class PapelModel extends Model {
 
-	private Map<String,String> camposInsert;
-	
 	public PapelModel() {
+		super("cdPapel");
 		setCamposInsert();
+		setApelidosColunas();
 	}
 	
 	public void setCamposInsert() {
@@ -26,12 +25,12 @@ public class PapelModel {
 		
 	}
 	
-	public Map<String,String> getCampos(){
-		return camposInsert;
-	}
-	
-	public String getColunaId() {
-		return "cdPapel";
+	public void setApelidosColunas() {
+		
+		apelidosColunas = new String[] {
+			"ID","PAPEL","COTAÇÃO","TIPO","SUB TIPO","TAXA IR","USUARIO"
+		};
+		
 	}
 	
 }

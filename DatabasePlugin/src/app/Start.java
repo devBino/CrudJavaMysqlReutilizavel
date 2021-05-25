@@ -9,7 +9,7 @@ public class Start {
 	}
 	
 	public static void executarTestesPapel() {
-		
+				
 		PapelExemplo papel = new PapelExemplo();
 		papel.getPapeis();
 		
