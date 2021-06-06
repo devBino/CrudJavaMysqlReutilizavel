@@ -1,6 +1,5 @@
 package odata;
 
-import java.lang.StringBuilder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -190,6 +189,9 @@ public class Database {
 						break;
 					case "double":
 						prepareInsert.setDouble(new Integer(arrInfo[1]), new Double( Double.parseDouble( arrInfo[2]) ));
+						break;
+					case "datetime":
+						prepareInsert.setString(new Integer(arrInfo[1]), new String(arrInfo[2]));
 						break;
 					default:
 						prepareInsert.setString(new Integer(arrInfo[1]), new String(arrInfo[2]));

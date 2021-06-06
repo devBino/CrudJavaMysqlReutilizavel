@@ -1,10 +1,7 @@
 package exemplos;
 
-import java.lang.StringBuilder;
 import java.util.Map;
 import java.util.ArrayList;
-import java.sql.ResultSet;
-
 import odata.Crud;
 import models.PapelModel;
 
@@ -25,7 +22,7 @@ import models.PapelModel;
  */
 public class PapelExemplo {
 
-	public Crud crud;
+	private Crud crud;
 	
 	public PapelExemplo() {
 		crud = new Crud();
@@ -33,9 +30,9 @@ public class PapelExemplo {
 	
 	public void salvarPapel() {
 		
-		PapelModel p = new PapelModel();
+		PapelModel papelModel = new PapelModel();
 		
-		Map<String,String> campos = p.getCampos();
+		Map<String,String> campos = papelModel.getCampos();
 		
 		campos.put("nmPapel", campos.get("nmPapel")+"OZ1D");
 		campos.put("subTipo", campos.get("subTipo")+"4");
@@ -57,9 +54,9 @@ public class PapelExemplo {
 	
 	public void deletarPapel(int prId) {
 		
-		PapelModel p = new PapelModel();
+		PapelModel papelModel = new PapelModel();
 		
-		crud.prepararDelete("papel",p.getColunaId(),prId);
+		crud.prepararDelete("papel",papelModel.getColunaId(),prId);
 		int regDeletados = crud.deletar();
 		
 		System.out.println(regDeletados + " Registro(s) deletado(s)...");
@@ -68,11 +65,11 @@ public class PapelExemplo {
 	
 	public void getPapeis() {
 		
-		PapelModel pModel = new PapelModel();
-		ArrayList<String[]> listaPapeis = crud.prepararLista( crud.listar("papel","1000"), pModel );
+		PapelModel papelModel = new PapelModel();
+		ArrayList<String[]> listaPapeis = crud.prepararLista( crud.listar("papel","1000"), papelModel );
 		StringBuilder resultado = new StringBuilder();
 		
-		for(String coluna : pModel.getApelidosColunas()){
+		for(String coluna : papelModel.getApelidosColunas()){
 			resultado.append(coluna + "\t");
 		}
 		

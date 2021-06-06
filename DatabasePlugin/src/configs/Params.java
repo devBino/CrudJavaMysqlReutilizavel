@@ -5,7 +5,7 @@ public class Params {
 	final static String HOST = "127.0.0.1";
 	final static String USER = "fer";
 	final static String PASS = "fer";
-	final static String BANCO = "investimento";
+	final static String BANCO = "estoque";
 
 	public static String getHost() {
 		return HOST;

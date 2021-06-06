@@ -1,6 +1,5 @@
 package odata;
 
-import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -109,6 +108,10 @@ public class Crud extends Database {
 							
 						case "double":
 							arrLinha[indiceColuna] = Double.toString(dados.getDouble(chave));
+							break;
+						
+						case "datetime":
+							arrLinha[indiceColuna] = dados.getString(chave);
 							break;
 							
 						default:
