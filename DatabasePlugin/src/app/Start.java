@@ -19,6 +19,8 @@ public class Start {
 	public static void executarTestesProduto() {
 		
 		ProdutoExemplo produto = new ProdutoExemplo();
+
+		produto.alterarProduto("1");
 		produto.getProdutos();
 		
 	}

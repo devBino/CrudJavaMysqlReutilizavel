@@ -20,6 +20,8 @@ public class Database {
 	
 	protected String sqlInsert;
 	protected PreparedStatement prepareInsert;
+	protected String sqlUpdate;
+	protected PreparedStatement prepareUpdate;
 	protected String sqlDelete;
 	protected PreparedStatement prepareDelete;
 	
@@ -124,10 +126,8 @@ public class Database {
 		
 		for(String str : prCampos.keySet()) {
 			
-			String info = prCampos.get(str);
-			String[] arrInfo = info.split("#");
-			
-			arrColunas[ new Integer( Integer.parseInt(arrInfo[1]) - 1 ) ] = str;
+			String[] arrInfo = prCampos.get(str).split("#");
+			arrColunas[ Integer.parseInt(arrInfo[1]) - 1 ] = str;
 			
 		}
 		
@@ -177,8 +177,7 @@ public class Database {
 	
 			for(String str : prCampos.keySet()) {
 				
-				String info = prCampos.get(str);
-				String[] arrInfo = info.split("#");
+				String[] arrInfo = prCampos.get(str).split("#");
 				
 				switch(arrInfo[0]){
 					case "string":
@@ -204,6 +203,98 @@ public class Database {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public void prepararUpdate(String prTabela, String prColuna, String prId, Map<String,String> prCampos) {
+	
+		StringBuilder sql = new StringBuilder();
+		String[] arrDadosSets = montarSetUpdate(prCampos);
+		
+		sql.append("update ");
+		sql.append(prTabela);
+		sql.append(" set ");
+		sql.append(arrDadosSets[0]);
+		sql.append(" where ");
+		sql.append(prColuna);
+		sql.append("=?");	
+		
+		sqlUpdate = sql.toString();
+		
+		prepararStatementUpdate(prCampos,arrDadosSets[1],prId);
+		
+	}
+	
+	public void prepararStatementUpdate(Map<String,String> prCampos, String prIndicesColunas, String prId) {
+		
+		try {
+			
+			prepareUpdate = con.prepareStatement(sqlUpdate);
+			
+			int indice = 0;
+			
+			for(String str : prCampos.keySet()) {
+				
+				String arrInfo[] = prCampos.get(str).split("#");
+				
+				if( prIndicesColunas.contains( arrInfo[1] ) ) {
+					
+					indice = prIndicesColunas.replace(";","").indexOf(arrInfo[1]) + 1;
+					
+					switch(arrInfo[0]){
+						case "string":
+							prepareUpdate.setString(indice, new String(arrInfo[2]));
+							break;
+						case "int":
+							prepareUpdate.setInt(indice, new Integer( Integer.parseInt(arrInfo[2]) ));
+							break;
+						case "double":
+							prepareUpdate.setDouble(indice, new Double( Double.parseDouble( arrInfo[2]) ));
+							break;
+						case "datetime":
+							prepareUpdate.setString(indice, new String(arrInfo[2]));
+							break;
+						default:
+							prepareUpdate.setString(indice, new String(arrInfo[2]));
+							break;
+					}
+					
+				}
+				
+			}
+			
+			indice += 1;
+			
+			prepareUpdate.setInt(indice,new Integer(prId));
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public String[] montarSetUpdate(Map<String,String> prCampos) {
+		
+		StringBuilder strSets = new StringBuilder();
+		StringBuilder indicesCampos = new StringBuilder();
+		String[] arrSets = new String[2];
+		
+		
+		for(String str : prCampos.keySet()) {
+			
+			String[] arrInfo = prCampos.get(str).split("#");
+			
+			if( arrInfo.length > 2 ) {
+				strSets.append(str + "=?,");
+				indicesCampos.append(arrInfo[1]);
+			}
+			
+		}
+		
+		arrSets[0] = strSets.toString().substring(0, strSets.toString().length() - 1 );
+		arrSets[1] = indicesCampos.toString();
+		
+		return arrSets;
 		
 	}
 	

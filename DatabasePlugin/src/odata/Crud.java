@@ -30,6 +30,25 @@ public class Crud extends Database {
 		return qtdeSalvo;
 	}
 	
+	public int alterar() {
+		
+		int qtdeSalvo = 0;
+		
+		try {
+			
+			qtdeSalvo = prepareUpdate.executeUpdate();
+			
+			prepareUpdate.clearBatch();
+			prepareUpdate.clearParameters();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return qtdeSalvo;
+		
+	}
+	
 	public int deletar() {
 		int qtdeDeletado = 0;
 		

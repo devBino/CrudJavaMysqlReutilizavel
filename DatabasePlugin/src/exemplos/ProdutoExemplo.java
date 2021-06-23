@@ -39,7 +39,23 @@ public class ProdutoExemplo {
 
 	}
 	
-	public void alterarProduto(int prId) {
+	public void alterarProduto(String prId) {
+		
+		ProdutoModel produtoModel = new ProdutoModel();
+		
+		Map<String,String> campos = produtoModel.getCampos();
+		
+		Random rand = new Random();
+		int numeroBase = rand.nextInt(1000);
+		
+		campos.put("cdCategoria", campos.get("cdCategoria") + "2");
+		campos.put("cdFornecedor",campos.get("cdFornecedor") + "2");
+		campos.put("nmProduto", campos.get("nmProduto") + "PRODUTO TESTE " + String.valueOf(numeroBase));
+		
+		crud.prepararUpdate("produto","cdProduto",prId,campos);
+		int regAlterados = crud.alterar();
+		
+		System.out.println(regAlterados + " Registro(s) salvo(s)...");
 		
 	}
 	
