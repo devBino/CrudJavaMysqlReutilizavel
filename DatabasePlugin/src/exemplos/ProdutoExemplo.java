@@ -39,7 +39,7 @@ public class ProdutoExemplo {
 
 	}
 	
-	public void alterarProduto(String prId) {
+	public void alterarProduto(int prId) {
 		
 		ProdutoModel produtoModel = new ProdutoModel();
 		

@@ -206,7 +206,7 @@ public class Database {
 		
 	}
 	
-	public void prepararUpdate(String prTabela, String prColuna, String prId, Map<String,String> prCampos) {
+	public void prepararUpdate(String prTabela, String prColuna, int prId, Map<String,String> prCampos) {
 	
 		StringBuilder sql = new StringBuilder();
 		String[] arrDadosSets = montarSetUpdate(prCampos);
@@ -225,7 +225,7 @@ public class Database {
 		
 	}
 	
-	public void prepararStatementUpdate(Map<String,String> prCampos, String prIndicesColunas, String prId) {
+	public void prepararStatementUpdate(Map<String,String> prCampos, String prIndicesColunas, int prId) {
 		
 		try {
 			
@@ -265,7 +265,7 @@ public class Database {
 			
 			indice += 1;
 			
-			prepareUpdate.setInt(indice,new Integer(prId));
+			prepareUpdate.setInt(indice, prId);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

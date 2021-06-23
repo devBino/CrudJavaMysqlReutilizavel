@@ -20,7 +20,7 @@ public class Start {
 		
 		ProdutoExemplo produto = new ProdutoExemplo();
 
-		produto.alterarProduto("1");
+		produto.alterarProduto(1);
 		produto.getProdutos();
 		
 	}
